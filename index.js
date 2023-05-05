@@ -1,7 +1,6 @@
 import { chromium } from "playwright";
 import cron from "node-cron";
 import TelegramBot from "node-telegram-bot-api";
-require("dotenv").config();
 
 const PAGE = "https://dolarhoy.com/";
 
