@@ -131,16 +131,17 @@ class CRNetworkManager {
   }
   _onAuthRequired(event) {
     let response = 'Default';
+    const shouldProvideCredentials = this._shouldProvideCredentials(event.request.url);
     if (this._attemptedAuthentications.has(event.requestId)) {
       response = 'CancelAuth';
-    } else if (this._credentials) {
+    } else if (shouldProvideCredentials) {
       response = 'ProvideCredentials';
       this._attemptedAuthentications.add(event.requestId);
     }
     const {
       username,
       password
-    } = this._credentials || {
+    } = shouldProvideCredentials && this._credentials ? this._credentials : {
       username: undefined,
       password: undefined
     };
@@ -152,6 +153,10 @@ class CRNetworkManager {
         password
       }
     });
+  }
+  _shouldProvideCredentials(url) {
+    if (!this._credentials) return false;
+    return !this._credentials.origin || new URL(url).origin.toLowerCase() === this._credentials.origin.toLowerCase();
   }
   _onRequestPaused(workerFrame, event) {
     if (!event.networkId) {

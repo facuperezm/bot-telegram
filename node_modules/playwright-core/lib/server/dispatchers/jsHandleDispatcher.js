@@ -70,6 +70,11 @@ class JSHandleDispatcher extends _dispatcher.Dispatcher {
       value: serializeResult(await this._object.jsonValue())
     };
   }
+  async objectCount(params) {
+    return {
+      count: await this._object.objectCount()
+    };
+  }
   async dispose() {
     await this._object.dispose();
   }

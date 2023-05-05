@@ -75,9 +75,9 @@ class ElectronApplication extends _channelOwner.ChannelOwner {
     // TODO: add ElectronPage class inherting from Page.
     return [...this._windows];
   }
-  async firstWindow() {
+  async firstWindow(options) {
     if (this._windows.size) return this._windows.values().next().value;
-    return this.waitForEvent('window');
+    return this.waitForEvent('window', options);
   }
   context() {
     return this._context;
