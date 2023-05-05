@@ -9,9 +9,12 @@ let timestamp = new Date();
 
 // Web scraping logic
 async function main() {
-  const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
-    polling: false,
-  });
+  const bot = new TelegramBot(
+    "6237887628:AAEXNHCU-iX54hqSMcT8yglJASka0aU00Jw",
+    {
+      polling: false,
+    }
+  );
   const browser = await chromium.launch();
   cron.schedule("*/5 * * * * *", async () => {
     console.log(
@@ -36,6 +39,9 @@ async function main() {
       cache = nextValorDelDolar;
       timestamp = new Date();
       console.log("no hay novedades");
+      bot.sendMessage("@tur_nos", `El dolar subio. está a ${valorDelDolar}`, {
+        parse_mode: "Markdown",
+      });
     } else {
       if (cache) {
         bot.sendMessage("@tur_nos", `El dolar subio. está a ${valorDelDolar}`, {
